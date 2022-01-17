@@ -2,6 +2,11 @@ import cv2 as cv
 import numpy as np
 import random as rand
 import imutils
+import sounddevice as sd
+import soundfile as sf
+
+soundArr, soundRate = sf.read('Imminent.wav')
+sd.play(soundArr, soundRate)
 
 dummy = cv.imread('dummy.jpg')
 dummy = cv.resize(dummy, (600, 470))
@@ -87,11 +92,12 @@ def getCarDirection(points):
     return "Middle"
 
 
-
 while True:
     img = original.copy()
     cv.rectangle(img, (5, 5), (10, img.shape[0]-10), (123, 23, 232), cv.FILLED)
     cv.rectangle(img, (img.shape[1]-10, 5), (img.shape[1]-5, img.shape[0]-10), (123, 23, 232), cv.FILLED)
+
+    # print(sd.get_stream().check_data())
 
     leftStart, leftEnd = 12, int(img.shape[1]//2)-2
     rightStart, rightEnd = int(img.shape[1]//2)+12, img.shape[1]-15
